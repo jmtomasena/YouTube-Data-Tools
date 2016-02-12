@@ -168,7 +168,9 @@ if(isset($_POST["channel"]) || isset($_POST["seeds"]) || isset($_POST["query"]))
 		$ids = getIdsFromSearch($query,$iterations,$rankby);
 
 		makeStatsFromIds($ids);
-		
+	
+	// ESTE ES EL APARTADO CLAVE DEL CODIGO...
+	// INVESTIGAR QUE SIGNIFICA LA FUNCION explode(",",$seeds);
 	} else if($mode == "seeds") {
 		
 		$seeds = $_POST["seeds"];
@@ -306,7 +308,7 @@ function getIdsFromSearch($query,$iterations,$rankby) {
 	return $ids;
 }
 	
-	
+// Esta es en realidad la función que importa... OJO...	
 function makeStatsFromIds($ids) {
 	
 	global $apikey,$mode;
@@ -321,7 +323,8 @@ function makeStatsFromIds($ids) {
 		
 		$vid = $ids[$i];
 		$lookup[$vid] = $i; 
-		
+		// este es el codigo que habrá que combinar. ¿Qué información es la que se pide en el módulo de los comentarios? 
+		// Específicamente, en la parte del módulo de los comentarios en los que se enumera qué usuarios hicieron qué comentarios...
 		$restquery = "https://www.googleapis.com/youtube/v3/videos?part=statistics,contentDetails,snippet&id=".$vid."&key=".$apikey;
 
 		$reply = doAPIRequest($restquery);
